@@ -6,30 +6,24 @@ import slither
 import Rithomgame
 
 pygame.init()
-# define colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
-# get screen size
 user32 = ctypes.windll.user32
 screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 
-current_selection = 0  # 0: Tetris, 1: Slither, 2: Rithom
+current_selection = 0
 is_space_pressed = False
 
-# create the screen
 screen = pygame.display.set_mode(screensize, FULLSCREEN)
 
-# create font object
 font = pygame.font.Font('font/a시월구일1.ttf',52)
 
-# load button images
 Tetris = pygame.image.load('image/tetris.png')
 Slither = pygame.image.load('image/slither.png')
 Music = pygame.image.load('image/music.png')
 
-# define button dimensions and positions
 btn_width = Tetris.get_width()
 btn_height = Tetris.get_height()
 
@@ -41,14 +35,12 @@ slither_rect = pygame.Rect(button_x + btn_width + button_spacing, button_y, btn_
 music_rect = pygame.Rect(button_x + (btn_width + button_spacing) * 2, button_y, btn_width, btn_height)
 
 
-# set up initial button states
 tetris_active = False
 slither_active = False
 galaga_active = False
 
 def main_menu():
     global current_selection, is_space_pressed
-    # main loop
     running = True
     while running:
         for event in pygame.event.get():
@@ -89,10 +81,8 @@ def main_menu():
         render()
 
 def render():
-    # fill the screen with black
     screen.fill(BLACK)
 
-    # draw the Tetris button
     if current_selection == 0:
         screen.blit(pygame.transform.scale(Tetris, (btn_width + 10, btn_height + 10)),
                     (tetris_rect.x - 5, tetris_rect.y - 5))
@@ -114,14 +104,11 @@ def render():
     else:
         screen.blit(Music, music_rect)
 
-    # render text surface
     text_surface = font.render('게임을 고르세요!', True, WHITE)
 
-    # get text surface rectangle and center it
     text_rect = text_surface.get_rect()
     text_rect.center = screen.get_rect().center
 
-    # draw text surface onto main surface
     screen.blit(text_surface, text_rect)
 
     pygame.display.flip()
